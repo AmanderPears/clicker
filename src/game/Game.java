@@ -32,12 +32,12 @@ public class Game extends JPanel {
 		JButton clickButton = new JButton("Click Me!");
 		add(clickButton, gridc);
 
-		JButton buyAuto = new JButton("Buy autoclicker");
+		JButton buyAuto = new JButton("Buy autoclicker ($100)");
 		// buyAuto.setEnabled(false);
 		gridc.gridwidth = 1;
 		add(buyAuto, gridc);
 
-		JLabel buyAutolbl = new JLabel("Auto clickers: ");
+		JLabel buyAutolbl = new JLabel("Auto clickers: 0");
 		gridc.gridwidth = GridBagConstraints.REMAINDER;
 		add(buyAutolbl, gridc);
 
@@ -50,11 +50,28 @@ public class Game extends JPanel {
 
 				total++;
 				countDisplay.setText(Integer.toString(total));
+
 			}
 		});
 
 		// bu
 		Vector<Timer> timers = new Vector<Timer>();
+
+		// update buybutton
+		timers.addElement(new Timer());
+		timers.lastElement().scheduleAtFixedRate(new TimerTask() {
+
+			@Override
+			public void run() {
+				if ((total - 100) >= 0) {
+					buyAuto.setEnabled(true);
+				} else {
+					buyAuto.setEnabled(false);
+				}
+			}
+		}, 0, 100);
+
+		/// add auto clickers
 		buyAuto.addActionListener(new ActionListener() {
 
 			@Override
